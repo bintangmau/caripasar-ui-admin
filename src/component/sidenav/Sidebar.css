@@ -1,0 +1,51 @@
+
+.sidebar {
+    width: 16%;
+    height: 100%;
+    background-color:  #F7C629;
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    overflow-x: hidden; /* Disable horizontal scroll */
+}
+
+.admin-profile {
+    display: flex;
+    margin: 20px;
+}
+
+.admin-profile h5 {
+    margin-left: 12px;
+    font-size: 12px;
+}
+
+.avatar-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 7px;
+}
+
+.admin-navigation {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-navigation a {
+    /* padding: 8px 8px 8px 32px; */
+    text-decoration: none;
+    font-size: 15px;
+    display: block;
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+
+.admin-navigation a:hover {
+    color: #f1f1f1;
+}

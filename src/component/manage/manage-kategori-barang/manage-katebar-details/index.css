@@ -1,0 +1,12 @@
+.managekatebar-hapus-btn {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    width: 80%;
+}
+
+.managekatebar-hapus-btn:hover {
+    cursor: pointer;;
+}

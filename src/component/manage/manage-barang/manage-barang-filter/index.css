@@ -1,0 +1,168 @@
+.managebarang-filter-container {
+    display: flex;
+    width: 100%;
+    /* background-color: blueviolet; */
+}
+
+
+/* SEARCH FILTER */
+.managebarang-search-filter {
+    margin-bottom: 25px;
+    display: flex;
+    width: 30%;
+}
+
+.managebarang-search-filter input {
+    width: 100%;
+    height: 30px;
+    padding-left: 10px;
+    border-radius: 4px;
+    border: 1px solid #c4c4c4;
+}
+
+.managebarang-search-filter button {
+    background-color: #68AE00;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    width: 20%;
+    height: 33px;
+    margin-left: 10px;
+}
+
+.managebarang-search-filter button:hover {
+    cursor: pointer;
+}
+/* SEARCH FILTER */
+
+.managebarang-filterby-supplier {
+    margin-bottom: 25px;
+    display: flex;
+    width: 24%;
+    border: 1px solid #c4c4c4;
+    padding: 10px;
+}
+
+.managebarang-filterby-supplier select {
+    width: 100%;
+}
+
+
+/* FILTER STOCK */
+
+.managebarang-filterby-stock {
+    margin-bottom: 25px;
+    display: flex;
+    width: 30%;
+    margin-left: 10px;
+    border: 1px solid #c4c4c4;
+    padding: 10px;
+}
+
+.managebarang-filterby-stock select {
+    width: 50%;
+}
+
+.managebarang-filterby-stock input {
+    width: 30%;
+    height: 30px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-radius: 4px;
+    border: 1px solid #c4c4c4;
+}
+
+.managebarang-filterby-stock button {
+    margin-left: 10px;
+    background-color: #68AE00;
+    border: none;
+    color: white;
+    border-radius: 4px;
+}
+
+.managebarang-filterby-stock button:hover {
+    cursor: pointer;
+}
+
+/* FILTER STOCK */
+
+
+
+/* FILTER PRICE */
+
+.managebarang-filterby-price {
+    margin-bottom: 25px;
+    display: flex;
+    width: 30%;
+    margin-left: 10px;
+    border: 1px solid #c4c4c4;
+    padding: 10px;
+}
+
+.managebarang-filterby-price select {
+    width: 50%;
+}
+
+.managebarang-filterby-price input {
+    width: 30%;
+    height: 30px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-radius: 4px;
+    border: 1px solid #c4c4c4;
+}
+
+.managebarang-filterby-price button {
+    margin-left: 10px;
+    background-color: #68AE00;
+    border: none;
+    color: white;
+    border-radius: 4px;
+}
+
+.managebarang-filterby-price button:hover {
+    cursor: pointer;
+}
+
+/* FILTER PRICE */
+
+/* BUTTON SHOW ALL */
+
+.managebarang-showall-button {
+    margin-bottom: 25px;
+    width: 7%;
+    border: 1px solid #c4c4c4;
+    margin-left: 10px;
+}
+
+.managebarang-showall-button button {
+    background-color: #68AE00;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    height: 30px;
+    margin-top: 13px;
+    margin-left: 9px;
+}
+/* BUTTON SHOW ALL */
+
+/* TABLE */
+
+.managebarang-table {
+    border: 1px solid #c4c4c4;
+    padding: 10px;
+}
+
+.managebarang-table th {
+    background-color: #F7C629;
+    width: 150px;
+    padding: 5px;
+}
+
+.managebarang-table td {
+    text-align: center;
+    padding: 5px;
+}
+
+/* TABLE */

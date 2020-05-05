@@ -1,0 +1,21 @@
+
+
+/* TABLE */
+.managekatebar-table {
+    border: 1px solid #c4c4c4;
+    padding: 10px;
+    width: 100%;
+}
+
+.managekatebar-table th {
+    background-color: #F7C629;
+    width: 150px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.managekatebar-table td {
+    text-align: center;
+    padding: 5px;
+}
+/* TABLE */

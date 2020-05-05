@@ -1,0 +1,15 @@
+.managewilayah-header {
+    display: flex;
+}
+
+.managewilayah-header button {
+    background-color: #68AE00;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+}
+
+.managewilayah-header button:hover {
+    cursor: pointer;
+}

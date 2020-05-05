@@ -1,0 +1,22 @@
+.navbar-container {
+    background-color:white;
+    width: 84%;
+    height: 80px;
+    overflow: hidden;
+    position: fixed;
+    box-shadow: 2px 2px 5px #c4c4c4;
+    display: flex;
+    /* justify-content: flex-end; */
+    justify-content: space-between;
+    /* align-items: flex-end; */
+    /* align-content: flex-end; */
+    /* justify-content: space-between; */
+    /* margin-left: ; */
+    /* flex-direction: column; */
+    /* justify-content: flex-end; */
+}
+
+.navbar-container h2 {
+    /* margin-left: 400px; */
+    margin: 20px;
+}

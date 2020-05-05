@@ -1,0 +1,25 @@
+.managesupplier-edit-btn {
+    background-color: #68AE00;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    width: 80%;
+}
+
+.managesupplier-hapus-btn {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    width: 80%;
+}
+
+.managesupplier-edit-btn:hover {
+    cursor: pointer;
+}
+
+.managesupplier-hapus-btn:hover {
+    cursor: pointer;;
+}

@@ -1,0 +1,36 @@
+.dashboard {
+    margin-top: 100px;
+}
+ 
+.dashboard-header {
+    margin: 20px
+}
+
+.dashboard-header span {
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.report-penjualan {
+    background-color: #68AE00;
+    width: 300px;
+    padding: 5px 20px;
+    margin: 20px;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+
+.report-penjualan:hover {
+    cursor: pointer;
+    transform: translateY(-3px); /* agar gambar bisa naik ketika di hover*/
+    box-shadow: 0 10px 10px rgba(0, 0, 0, .3);
+}
+
+.report-penjualan h1 {
+    color: white;
+}
+
+.report-penjualan span {
+    font-size: 15px;
+    color: white;
+}
