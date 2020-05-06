@@ -9,7 +9,7 @@ export default function ManageBarangHeader() {
         <div className='managebarang-header'>
 
                 <h2>Manage Barang</h2> 
-                <Link to='inputbarang' style={{ marginTop: '26px', marginLeft: '10px' }}>
+                <Link to='/inputbarang' style={{ marginTop: '26px', marginLeft: '10px' }}>
                  <button>Input Barang +</button>
                 </Link>
                

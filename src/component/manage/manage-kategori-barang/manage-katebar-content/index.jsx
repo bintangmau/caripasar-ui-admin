@@ -10,15 +10,20 @@ import './index.css'
 import ManageKatebarDetails from '../manage-katebar-details'
 
 export default function ManageKatebarContent() {
+
     const [ dataKategoriBarang, setDataKategoriBarang ] = useState([])
+    const [ loading, setLoading ] = useState(false)
 
     const getKategoriBarang = () => {
+        setLoading(true)
         Axios.get(urlAPI + 'kategoribarang/getkategoribarang')
         .then((res) => {
+            setLoading(false)
             setDataKategoriBarang(res.data.rows)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
 
@@ -43,7 +48,17 @@ export default function ManageKatebarContent() {
 
     return (
         <div>
-        
+            
+            {/* SPINNER */}
+            {
+                loading
+                ?
+                <center style={{ marginBottom: '10px' }}>
+                    <div className='loadingSpinner'></div>
+                </center>
+                :
+                null
+            }
             {/* TABEL */}
             <div className='managekatebar-table-container'>
                 <table className='managekatebar-table'>

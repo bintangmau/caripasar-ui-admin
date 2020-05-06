@@ -40,9 +40,9 @@ function App() {
           <Switch>
             <Route path='/' component={Home} exact/>
             <Route path='/manage' component={Manage} exact/>
-            <Route path='/managebarang' component={ManageBarang} exact/>
+            <Route path='/managebarang/:filter/:id' component={ManageBarang} exact/>
             <Route path='/inputbarang' component={InputBarang} exact/>
-            <Route path='/managesupplier' component={ManageSupplier} exact/>
+            <Route path='/managesupplier/:filter/:id' component={ManageSupplier} exact/>
             <Route path='/inputsupplier' component={InputSupplier} exact/>
             <Route path='/managewilayah' component={ManageWilayah} exact/>
             <Route path='/inputwilayah' component={InputWilayah} exact/>            

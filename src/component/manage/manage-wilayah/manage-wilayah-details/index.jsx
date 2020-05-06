@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { urlAPI } from '../../../../helper/database'
+import { Redirect, Link } from 'react-router-dom'
 
 // CSS
 import './index.css'
@@ -10,6 +11,7 @@ export default function ManageWilayahDetails({ id, nama }) {
     const [ jumlahJenisBarang, setJumlahJenisBarang ] = useState([])
     const [ jumlahTotalStok, setJumlahTotalStok ] = useState([])
 
+    // GET JUMLAH SUPPLIER
     const getJumlahSupplier = () => {
         Axios.get(urlAPI + 'wilayah/getjumlahsupplier/' + id)
         .then((res) => {
@@ -20,6 +22,7 @@ export default function ManageWilayahDetails({ id, nama }) {
         })
     }
 
+    // GET JUMLAH JENIS BARANG
     const getJumlahJenisBarang = () => {
         Axios.get(urlAPI + 'wilayah/getjumlahjenisbarang/' + id)
         .then((res) => {
@@ -30,6 +33,7 @@ export default function ManageWilayahDetails({ id, nama }) {
         })
     }
     
+    // GET JUMLAH STOK BARANG
     const getJumlahStokBarang = () => {
         Axios.get(urlAPI + 'wilayah/getjumlahstokbarang/' + id)
         .then((res) => {
@@ -40,15 +44,17 @@ export default function ManageWilayahDetails({ id, nama }) {
         })
     }
 
+    // RENDER TOTAL STOK
     const renderTotalStok = () => {
         var totalStok = 0
         jumlahTotalStok.map((val) => {
-            Number(val.jumlahstokbarang)
-            totalStok += val.jumlahstokbarang
+            var stokPerBarang = Number(val.jumlahstokbarang)
+            totalStok += stokPerBarang                  
         })
         return totalStok
     }
 
+    // DELETE KOTA
     const deleteKota = () => {
         if(window.confirm(`yakin mau hapus ${nama}?`)) {
             Axios.post(urlAPI + 'wilayah/deletekota', { idKota: id })
@@ -70,8 +76,20 @@ export default function ManageWilayahDetails({ id, nama }) {
     return (
         <tr>
             <td>{nama}</td>
-            <td>{jumlahSupplier}</td>
-            <td>{jumlahJenisBarang}</td>
+            <td>{jumlahSupplier} 
+                <Link to={`/managesupplier/wilayah/${id}`}>
+                    <button className='btn-show-supplier-wilayah'>
+                        lihat
+                    </button>
+                </Link>
+            </td>
+            <td>{jumlahJenisBarang}
+                <Link to={`/managebarang/wilayah/${id}`}>
+                    <button className='btn-show-supplier-wilayah'>
+                        lihat
+                    </button>
+                </Link>
+            </td>
             <td>{renderTotalStok()}</td>
             <td><button className='managewilayah-hapus-btn' onClick={deleteKota}>Hapus</button></td>
         </tr>

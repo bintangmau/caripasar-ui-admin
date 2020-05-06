@@ -9,7 +9,7 @@ export default function ManageSupplierHeader() {
         <div className='managesupplier-header'>
 
           <h2>Manage Supplier</h2> 
-          <Link to='inputsupplier' style={{ marginTop: '26px', marginLeft: '10px' }}>
+          <Link to='/inputsupplier' style={{ marginTop: '26px', marginLeft: '10px' }}>
               <button>Input Supplier +</button>
           </Link>
 

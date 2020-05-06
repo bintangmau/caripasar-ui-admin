@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { urlAPI } from '../../../../helper/database'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import io from 'socket.io-client'
 
 // CSS
@@ -15,6 +15,12 @@ export default function ManageBarangFilter() {
     const [ cariNamaBarang, setCariNamaBarang ] = useState('')
     const [ searchCondition, setSearchCondition ] = useState(false)
     const [ listSupplier, setListSupplier ] = useState([])
+    const [ listDataKota, setListDataKota ] = useState([])
+    const [ listKategoriBarang, setListKategoriBarang ] = useState([])
+    const [ loading, setLoading ] = useState(false)
+
+    // UNTUK GET BARANG BY PARAMS.ID
+    const history = useHistory()
 
     // UNTUK FILTER BY STOCK
     const [ numFilterStock, setNumFilterStock ] = useState(0)
@@ -23,6 +29,13 @@ export default function ManageBarangFilter() {
     // UNTUK FILTER BY PRICE
     const [ numFilterPrice, setNumFilterPrice ] = useState(0)
     const [ operationPrice, setOperationPrice ] = useState('<')
+
+    // UNTUK FILTER BY WILAYAH
+    const idParamsToNumber = Number(history.location.pathname.split('/')[3])
+    const [ idWilayah, setIdWilayah ] = useState(idParamsToNumber)
+
+    // UNTUK FILTER BY KATEGORI
+    const [ idKategori, setIdKategori ] = useState(idParamsToNumber)
 
     // DATA ABAL2 UNTUK FILTER BY STOK
     const filterStock = [
@@ -40,13 +53,16 @@ export default function ManageBarangFilter() {
 
     // GET DATA BARANG
     const getDataBarang = () => {
+        setLoading(true)
         Axios.get(urlAPI + 'barang/getdatabarang')
         .then((res) => {
             setSearchCondition(false)
             setDataBarang(res.data.rows)
+            setLoading(false)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
 
@@ -55,25 +71,31 @@ export default function ManageBarangFilter() {
         if(!cariNamaBarang) {
             alert('Masukkan nama barang!')
         } else {   
+            setLoading(true)
             Axios.get(urlAPI + 'barang/caribarang/' + cariNamaBarang)
             .then((res) => {
                 setSearchCondition(true)
                 setDataBarang(res.data.rows)
+                setLoading(false)
             })
             .catch((err) => {
-                console.log(err)
+                setLoading(false)
+                // console.log(err)
             })
         }
     }
 
     // GET DATA BARANG FILTER BY SUPPLIER
     const getDataFilterBySupplier = (idSupp) => {
+        setLoading(true)
         Axios.get(urlAPI + 'barang/filterbarangbysupplier/' + idSupp)
         .then((res) => {
             setDataBarang(res.data.rows)
+            setLoading(false)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
 
@@ -82,15 +104,18 @@ export default function ManageBarangFilter() {
         if(!numFilterStock) {
             alert('masukkan nominal!')
         } else {
+            setLoading(true)
             Axios.post(urlAPI + 'barang/filterbarangbystock', {        
                 operation: operationStock,
                 nominal: numFilterStock
             })
             .then((res) => {
                 setDataBarang(res.data.rows)
+                setLoading(false)
             })
             .catch((err) => {
-                console.log(err)
+                setLoading(false)
+                // console.log(err)
             })
         }
     }
@@ -100,27 +125,95 @@ export default function ManageBarangFilter() {
         if(!numFilterPrice) {
             alert('masukkan nominal!')
         } else {
+            setLoading(true)
             Axios.post(urlAPI + 'barang/filterbarangbyprice', {
                 operation: operationPrice,
                 nominal: numFilterPrice
             })
             .then((res) => {
                 setDataBarang(res.data.rows)
+                setLoading(false)
             })
             .catch((err) => {
-                console.log(err)
+                setLoading(false)
+                // console.log(err)
             })
         }
     }
 
     // GET LIST NAMA2 SUPPLIER
     const getListNamaSupplier = () => {
+        setLoading(true)
         Axios.get(urlAPI + 'barang/getlistnamasupplier')
         .then((res) => {
+            setLoading(false)
             setListSupplier(res.data.rows)
         })
         .catch((err) => {
+            setLoading(false)
             return null
+        })
+    }
+
+      // GET LIST KOTA FOR FILTER
+      const getListDataKota = () => {
+          setLoading(true)
+        Axios.get(urlAPI + 'supplier/getlistdatakota')
+        .then((res) => {
+            var data = res.data.rows
+            // MENAMBAH VALUE KE INDEX[0] BERUPA DATA KOSONG
+            data.unshift({ idkota: 0, namakota: 'Filter by wilayah' })
+            
+            setListDataKota(data)
+            setLoading(false)
+        })
+        .catch((err) => {
+            setLoading(false)
+            // console.log(err)
+        })
+    }
+
+     // GET LIST KATEGORI BARANG
+     const getListKategori = () => {
+        setLoading(true)
+        Axios.get(urlAPI + 'barang/getlistkategoribarang')
+        .then((res) => {
+            var data = res.data.rows
+            // MENAMBAH VALUE KE INDEX [0]
+            data.unshift({ idkategori: 0, namakategori: 'Filter by kategori' })
+            setListKategoriBarang(data)
+        })
+        .catch((err) => {
+            setLoading(false)
+            // console.log(err)
+        })
+    }
+
+    // SHOW PRODUCT BY WILAYAH
+    const getShowProductFromWilayah = () => {
+        setLoading(true)
+        Axios.get(urlAPI + 'wilayah/getshowproduct/' + idWilayah)
+        .then((res) => { 
+            setLoading(false)
+            setDataBarang(res.data.rows)
+        })
+        .catch((err) => {
+            setLoading(false)
+            // console.log(err)
+        })
+    }
+
+    // SHOW PRODUCT BY KATEGORI BARANG
+    const getShowProductFromKatebar = () => {
+        setLoading(true)
+        Axios.get(urlAPI + 'kategoribarang/getshowproduct/' + idKategori)
+        .then((res) => {
+            setLoading(false)
+            setDataBarang(res.data.rows)
+        })
+        .catch((err) => {
+            setLoading(false)
+            // console.log(err)
         })
     }
 
@@ -155,10 +248,39 @@ export default function ManageBarangFilter() {
         setOperationPrice(e.target.value)
     }
 
-    useEffect (() => {
-        getDataBarang()
-        getListNamaSupplier()
+    // HANDLE ONCLICK FILTER BY WILAYAH
+    const handleOnClickFilterByWilayah = () => {
+        if(idWilayah === 0) {
+            return null
+        } else {
+            getShowProductFromWilayah()
+        }
+    }
 
+     // HANDLE ONCLICK FILTER BY KATEGORI
+     const handleOnClickFilterByKategori = () => {
+        var id = Number(idKategori)
+        if(id === 0) {
+            return null
+        } else {
+            getShowProductFromKatebar()
+        }
+    }
+
+    useEffect (() => {
+        var params = history.location.pathname.split('/')
+        var paramsId = Number(params[3])
+        if(params[2] === 'all' && paramsId === 0){
+            getDataBarang()
+        } else if(params[2] === 'wilayah') {
+            getShowProductFromWilayah()
+        } else {
+            getShowProductFromKatebar()
+        }
+        
+        getListDataKota()
+        getListNamaSupplier()
+        getListKategori()
         // GET DATA REAL TIME
         const socket = io(`${urlAPI}`)
         socket.on('save-edit-barang', data => {
@@ -235,7 +357,45 @@ export default function ManageBarangFilter() {
                 </div>
 
             </div>
+
+            <div className="managebarang-filter-container">
+
+                {/* FORM FILTER BARANG BY WILAYAH */}
+                <div className='managebarang-filterby-supplier'>
+                    <select className="skillPicker" style={{ borderRadius: '5px' }} onChange={(e) => setIdWilayah(e.target.value)}>
+                        {listDataKota.map((option, index) =>
+                        <option key={option.kota} value={option.idkota}>
+                            {option.namakota}
+                        </option>
+                        )}
+                    </select>
+                    <button onClick={handleOnClickFilterByWilayah}>Cari</button>
+                </div>
+
+
+                {/* FORM FILTER BARANG BY KATEGORI */}
+                <div className='managebarang-filterby-supplier'>
+                    <select className="skillPicker" style={{ borderRadius: '5px' }} onChange={(e) => setIdKategori(e.target.value)}>
+                        {listKategoriBarang.map((option, index) =>
+                        <option key={option.idkategori} value={option.idkategori}>
+                            {option.namakategori}
+                        </option>
+                        )}
+                    </select>
+                    <button onClick={handleOnClickFilterByKategori}>Cari</button>
+                </div>
+            </div>
            
+           {/* SPINNER LOADING */}
+            {
+                loading
+                ?
+                <center style={{ marginBottom: '10px' }}>
+                    <div className='loadingSpinner'></div>
+                </center>
+                :
+                null
+            }
 
             <div className='managebarang-table-container'>
                 <table className='managebarang-table'>
@@ -248,7 +408,6 @@ export default function ManageBarangFilter() {
                         <th></th>
                         <th></th>
                     </tr>
-               
                     {renderDataBarang()}
                     
                 </table>

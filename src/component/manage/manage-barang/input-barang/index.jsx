@@ -31,6 +31,7 @@ export default function ManageBarang() {
         })
     }
 
+    // GET LIST KATEGORI BARANG
     const getListKategori = () => {
         Axios.get(urlAPI + 'barang/getlistkategoribarang')
         .then((res) => {
@@ -211,7 +212,7 @@ export default function ManageBarang() {
                         <div className='loadingSpinner'></div>
                         :
                         <> 
-                            <Link to='/managebarang'>
+                            <Link to='/managebarang/all/0'>
                                 <button style={{ backgroundColor: '#68AE00', marginRight: '15px' }}>Back</button>
                             </Link>
                             {/* BUTTON INPUT BARANG */}

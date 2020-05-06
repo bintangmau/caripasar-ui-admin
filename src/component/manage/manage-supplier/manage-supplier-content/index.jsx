@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { urlAPI } from '../../../../helper/database'
 import io from 'socket.io-client'
 
@@ -10,23 +10,28 @@ import './index.css'
 // COMPONENT
 import ManageSupplierDetails from '../manage-supplier-details'
 
-export default function ManageSupplierContent() {
+export default function ManageSupplierContent( props ) {
     
     const [ searchCondition, setSearchCondition ] = useState(false)
     const [ dataSupplier, setDataSupplier ] = useState([])
     const [ namaSupplierSearch, setNamaSupplierSearch ] = useState('')
     const [ listDataKota, setListDataKota ] = useState([])
     const [ idKotaFilter, setIdKotaFilter ] = useState(1)
+    const [ loading, setLoading ] = useState(false)
+    const history = useHistory()
      
     // GET DATA SUPPLIER
     const getDataSupplier = () => {
+        setLoading(true)
         Axios.get(urlAPI + 'supplier/getdatasupplier')
         .then((res) => {
             setSearchCondition(false)
             setDataSupplier(res.data.rows)
+            setLoading(false)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
 
@@ -51,35 +56,63 @@ export default function ManageSupplierContent() {
         if(!namaSupplierSearch) {
             alert('masukkan kata kunci!')
         } else {
+            setLoading(true)
             Axios.get(urlAPI + 'supplier/carisupplierbynama/' + namaSupplierSearch)
             .then((res) => {
+                setLoading(false)
                 setSearchCondition(true)
                 setDataSupplier(res.data.rows)
             })
             .catch((err) => {
-                console.log(err)
+                setLoading(false)
+                // console.log(err)
             })
         }
     }
 
+    const getShowSupplier = () => {
+        setLoading(true)
+        Axios.get(urlAPI + 'wilayah/getshowsupplier/' + history.location.pathname.split('/')[3])
+        .then((res) => {
+            var params = history.location.pathname.split('/')
+            var numParamsId = Number(params[3])
+            if(params[2] === 'all' && numParamsId === 0) {
+                getDataSupplier()
+            } else {
+                setLoading(false)
+                setDataSupplier(res.data.rows)
+            }
+        })
+        .catch((err) => {
+            setLoading(false)
+            // console.log(err)
+        })
+    }
+
     const getFiterSupplierByKota = () => {
+        setLoading(true)
         Axios.get(urlAPI + 'supplier/getfiltersupplierbywilayah/' + idKotaFilter)
         .then((res) => {
+            setLoading(false)
            setDataSupplier(res.data.rows)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
 
     // GET LIST KOTA FOR FILTER
     const getListDataKota = () => {
+        setLoading(true)
         Axios.get(urlAPI + 'supplier/getlistdatakota')
         .then((res) => {
+            setLoading(false)
             setListDataKota(res.data.rows)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
     
@@ -89,7 +122,8 @@ export default function ManageSupplierContent() {
     }
 
     useEffect(() => {
-        getDataSupplier()
+        getShowSupplier()
+       
         getListDataKota()
         // GET DATA REAL TIME
         const socket = io(`${urlAPI}`)
@@ -143,6 +177,17 @@ export default function ManageSupplierContent() {
             </div>
             {/* FILTER BOX */}
 
+            {/* SPINNER */}
+            {
+                loading
+                ?
+                <center style={{ marginBottom: '10px' }}>
+                    <div className='loadingSpinner'></div>
+                </center>
+                :
+                null
+            }
+
             {/* TABEL */}
             <div className='managesupplier-table-container'>
                 <table className='managesupplier-table'>
@@ -152,6 +197,8 @@ export default function ManageSupplierContent() {
                         <th>Alamat</th>
                         <th>Wilayah</th>
                         <th>No Telp</th>
+                        <th>Jumlah barang</th>
+                        <th>Jumlah stok</th>
                         <th></th>
                         <th></th>
                     </tr>

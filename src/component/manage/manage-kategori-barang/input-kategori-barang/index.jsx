@@ -7,18 +7,22 @@ import Axios from 'axios'
 import { urlAPI } from '../../../../helper/database'
 
 export default function InputKategoriBarang() {
-    const  [ namaKategoriBarang, setNamaKategoriBarang ] = useState('')
+    const [ namaKategoriBarang, setNamaKategoriBarang ] = useState('')
+    const [ loading, setLoading ] = useState(false)
 
     const inputKategoriBarang = () => {
         if(!namaKategoriBarang) {
             alert('masukkan nama kategori')
         } else {
+            setLoading(true)
             Axios.post(urlAPI + 'kategoribarang/inputkategori', { namaKategori: namaKategoriBarang })
             .then(() => {
+                setLoading(false)
                 alert('bisa')
             })
             .catch((err) => {
-                console.log(err)
+                setLoading(false)
+                // console.log(err)
             })
         }
     }
@@ -43,7 +47,13 @@ export default function InputKategoriBarang() {
                 <Link to='/managekategoribarang'>
                     <button style={{ backgroundColor: '#68AE00', marginRight: '15px' }}>Back</button>
                 </Link>
-                <button onClick={inputKategoriBarang}>Add</button>
+                {
+                    loading
+                    ?
+                    <div className='loadingSpinner'></div>
+                    :
+                    <button onClick={inputKategoriBarang}>Add</button>
+                }
             </div>
             {/* BUTTON ADD */}
 

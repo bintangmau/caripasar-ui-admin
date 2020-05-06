@@ -8,13 +8,13 @@ export default function Manage() {
     return (
         <div className='manage-container'>
 
-            <Link to='/managebarang'>
+            <Link to='/managebarang/all/0'>
                 <div className='manage-navigation'>
                     <p>Manage Barang</p>
                 </div>
             </Link>
 
-            <Link to='/managesupplier'>
+            <Link to='/managesupplier/all/0'>
                 <div className='manage-navigation'>
                     <p>Manage Supplier</p>
                 </div>

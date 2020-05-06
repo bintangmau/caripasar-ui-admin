@@ -13,27 +13,39 @@ export default function ManageWilayahContent() {
     const [ dataWilayah, setDataWilayah ] = useState([])
     const [ searchCondition, setSearchCondition ] = useState(false)
     const [ keyNamaWilayah, setKeyNamaWilayah ] = useState('')
+    const [ loading, setLoading ] = useState(false)
 
     // GET ALL DATA WILAYAH
     const getDataWilayah = () => {
+        setLoading(true)
         axios.get(urlAPI + 'wilayah/getdatawilayah')
         .then((res) => {
+            setLoading(false)
             setDataWilayah(res.data.rows)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
 
     // GET SEARCH BY NAME
     const searchWilayahByName = () => {
-        axios.get(urlAPI + 'wilayah/searchwilayahbyname/' + keyNamaWilayah)
-        .then((res) => {
-            setDataWilayah(res.data.rows)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        if(!keyNamaWilayah) {
+            alert('Masukkan kata kunci!')
+        } else {
+            setLoading(true)
+            axios.get(urlAPI + 'wilayah/searchwilayahbyname/' + keyNamaWilayah)
+            .then((res) => {
+                setLoading(false)
+                setSearchCondition(true)
+                setDataWilayah(res.data.rows)
+            })
+            .catch((err) => {
+                setLoading(false)
+                // console.log(err)
+            })
+        }
     }
 
     // RENDER DATA WILAYAH
@@ -50,7 +62,6 @@ export default function ManageWilayahContent() {
 
     useEffect(() => {
         getDataWilayah()
-        searchWilayahByName()
         const socket = io(`${urlAPI}`)
         socket.on('delete-kota', data => {
             getDataWilayah()
@@ -70,12 +81,23 @@ export default function ManageWilayahContent() {
                 {
                     searchCondition
                     ?
-                    <button style={{ backgroundColor: 'red' }} >X</button>
+                    <button style={{ backgroundColor: 'red' }} onClick={getDataWilayah}>X</button>
                     :
                     null
                 }
             </div>
             {/* SEARCH BOX */}
+
+            {/* SPINNER */}
+            {
+                loading
+                ?
+                <center style={{ marginBottom: '10px' }}>
+                    <div className='loadingSpinner'></div>
+                </center>
+                :
+                null
+            }
 
             {/* TABEL */}
             <div className='managewilayah-table-container'>

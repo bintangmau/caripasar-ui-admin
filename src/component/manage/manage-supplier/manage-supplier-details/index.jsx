@@ -10,6 +10,8 @@ export default function ManageSupplierDetails({ id, nama, alamat, notelp, wilaya
     const [ namaSupplier, setNamaSupplier ] = useState(nama)
     const [ alamatSupplier, setAlamatSupplier ] = useState(alamat)
     const [ noTelp, setNotelp ] = useState(notelp)
+    const [ jumlahBarang, setJumlahBarang ] = useState(0)
+    const [ jumlahStok, setJumlahStok ] = useState([])
     const [ editCondition, setEditCondition ] = useState(false)
     const [ listKota, setListKota ] = useState(0)
     const [ idKota, setIdKota ] = useState(idkota)
@@ -45,6 +47,41 @@ export default function ManageSupplierDetails({ id, nama, alamat, notelp, wilaya
         }
     }
 
+    // GET JUMLAH BARANG
+    const getJumlahBarang = () => {
+        axios.get(urlAPI + 'supplier/getjumlahbarang/' + id)
+        .then((res) => {
+            setJumlahBarang(res.data.rows[0].jumlahbarang)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    // GET JUMLAH STOK
+    const getJumlahStok = () => {
+        axios.get(urlAPI + 'supplier/getjumlahstok/' + id)
+        .then((res) => {
+            console.log(res.data.rows)
+            setJumlahStok(res.data.rows)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    // RENDER JUMLAH STOK
+    const renderJumlahStok = () => {
+        var totalStok = 0
+        jumlahStok.map((val) => {
+            var stok = Number(val.jumlahstok)
+
+            totalStok += stok
+        })
+        return totalStok
+    }
+
+    // GET LIST KOTA FOR FILTER
     const getListKota = () => {
         axios.get(urlAPI + 'supplier/getlistkotaforinput')
         .then((res) => {
@@ -73,12 +110,13 @@ export default function ManageSupplierDetails({ id, nama, alamat, notelp, wilaya
     }
 
     const handleChangeIdKota = (e) => {
-        console.log(e.target.value)
         setIdKota(e.target.value)
     }
 
     useEffect(() => {
         getListKota()
+        getJumlahBarang()
+        getJumlahStok()
     }, [])
 
     if(editCondition) {
@@ -102,6 +140,8 @@ export default function ManageSupplierDetails({ id, nama, alamat, notelp, wilaya
                 <td>
                     <input className="managebarang-edit-value-input" type="number" value={noTelp} onChange={handleChangeNoTelp}/>
                 </td>
+                <td>{jumlahBarang}</td>
+                <td>100</td>
                 <td>
                     <button className='managesupplier-edit-btn' onClick={editSupplier}>
                         Simpan
@@ -121,6 +161,8 @@ export default function ManageSupplierDetails({ id, nama, alamat, notelp, wilaya
                 <td>{alamat}</td>
                 <td>{wilayah}</td>
                 <td>{notelp}</td>
+                <td>{jumlahBarang}</td>
+                <td>{renderJumlahStok()}</td>
                 <td><button className='managesupplier-edit-btn' onClick={() => setEditCondition(true)}>Edit</button></td>
                 <td><button className='managesupplier-hapus-btn' onClick={deleteSupplier}>Hapus</button></td>
             </tr>

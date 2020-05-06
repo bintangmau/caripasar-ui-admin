@@ -1,3 +1,5 @@
+/* 
+BTN DELETE WILAYAH */
 .managewilayah-hapus-btn {
     background-color: red;
     color: white;
@@ -9,4 +11,21 @@
 
 .managewilayah-hapus-btn:hover {
     cursor: pointer;;
+}
+/* BTN DELETE WILAYAH */
+
+/* BTN SHOW SUPPLIER */
+.btn-show-supplier-wilayah {
+    background-color: #68AE00;
+    color: white;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    width: 35px;
+    height: 18px;
+    margin-left: 5px;
+}
+
+.btn-show-supplier-wilayah:hover {
+    cursor: pointer;
 }

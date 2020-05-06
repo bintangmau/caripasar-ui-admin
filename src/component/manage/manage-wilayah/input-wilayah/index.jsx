@@ -8,18 +8,22 @@ import './index.css'
 
 export default function InputWilayah() {
     const [ namaKota, setNamaKota ] = useState('')
+    const [ loading, setLoading ] = useState(false)
 
     const inputKota = () => {
         if(!namaKota) {
             alert('masukkan nama kota')
         } else {
+            setLoading(true)
             axios.post(urlAPI + 'wilayah/inputkota', { namaKota })
             .then(() => {
+                setLoading(false)
                 setNamaKota('')
                 alert('bisa')
             })
             .catch((err) => {
-                console.log(err)
+                setLoading(false)
+                // console.log(err)
             })
         }
     }
@@ -44,7 +48,13 @@ export default function InputWilayah() {
                 <Link to='/managewilayah'>
                     <button style={{ backgroundColor: '#68AE00', marginRight: '15px' }}>Back</button>
                 </Link>
-                <button onClick={inputKota}>Add</button>
+                {
+                    loading
+                    ?
+                    <div className='loadingSpinner'></div>
+                    :
+                    <button onClick={inputKota}>Add</button>
+                }
             </div>
             {/* BUTTON ADD */}
 

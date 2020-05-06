@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import Axios from 'axios'
+import { urlAPI } from '../../../../helper/database'
+import { Link } from 'react-router-dom'
 
 // CSS
 import './index.css'
-import Axios from 'axios'
-import { urlAPI } from '../../../../helper/database'
 
 
 export default function ManageKatebarDetails({ id, kategori }) {
@@ -42,6 +43,16 @@ export default function ManageKatebarDetails({ id, kategori }) {
         })
     }
 
+    // RENDER TOTAL STOK
+    const renderTotalStok = () => {
+        var totalStok = 0
+        jumlahProdukPerStok.map((val) => {
+            var stokPerBarang = Number(val.stokBarang)
+            totalStok += stokPerBarang                  
+        })
+        return totalStok
+    }
+
     useEffect(() => {
         getJumlahProdukPerJenis()
         getJumlahProdukPerStok()
@@ -51,8 +62,14 @@ export default function ManageKatebarDetails({ id, kategori }) {
         <tr>
             <td>{id}</td>
             <td>{kategori}</td>
-            <td>{jumlahProdukPerJenis}</td>
-            <td>2222</td>
+            <td>{jumlahProdukPerJenis}
+                <Link to={`/managebarang/katebar/${id}`}>
+                    <button className='btn-show-supplier-wilayah'>
+                        lihat
+                    </button>
+                </Link>
+            </td>
+            <td>{renderTotalStok()}</td>
             <td><button className='managekatebar-hapus-btn' onClick={deleteKategoriBarang}>Hapus</button></td>
         </tr>
     )

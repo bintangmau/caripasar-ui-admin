@@ -25,6 +25,7 @@ export default function InputSupplier() {
         } else if(!idKota) {
             alert('pilih kota supplier!')
         } else {
+            setLoading(true)
             axios.post(urlAPI + 'supplier/inputsupplier', {
                 namaSupplier,
                 alamatSupplier,
@@ -35,21 +36,26 @@ export default function InputSupplier() {
                 setNamaSupplier('')
                 setAlamatSupplier('')
                 setNoTelp(0)
+                setLoading(false)
                 alert('bisa!')
             })
             .catch((err) => {
-                console.log(err)
+                setLoading(false)
+                // console.log(err)
             })
         }
     }
 
     const getListKota = () => {
+        setLoading(true)
         axios.get(urlAPI + 'supplier/getlistkotaforinput')
         .then((res) => {
+            setLoading(false)
             setListKota(res.data.rows)
         })
         .catch((err) => {
-            console.log(err)
+            setLoading(false)
+            // console.log(err)
         })
     }
 
@@ -105,12 +111,17 @@ export default function InputSupplier() {
                 </div>
                 
             </div>
-            
             <div className='inputsupplier-container-button'>
-                <Link to='/managesupplier'>
+                <Link to='/managesupplier/all/0'>
                     <button style={{ backgroundColor: '#68AE00', marginRight: '15px' }}>Back</button>
                 </Link>
-                <button onClick={inputSupplier}>Add</button>
+                {
+                    loading
+                    ?
+                    <div className='loadingSpinner'></div>
+                    :
+                    <button onClick={inputSupplier}>Add</button>
+                }
             </div>
 
         </div>
