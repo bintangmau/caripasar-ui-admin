@@ -41,3 +41,16 @@
     border: 1px solid #c4c4c4;
     margin-top: 5px;
 }
+
+.managebar-details-edit-satuan {
+    display: flex;
+}
+
+.managebar-details-edit-satuan input {
+    width: 40%;
+    height: 20px;
+    padding-left: 10px;
+    border-radius: 4px;
+    border: 1px solid #c4c4c4;
+    margin-top: 5px;
+}

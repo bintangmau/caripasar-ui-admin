@@ -14,9 +14,14 @@ export default function ManageBarang() {
     const [ idSupplier, setIdSupplier ] = useState(1)
     const [ gambarBarang, setGambarBarang ] = useState('')
     const [ kategoriBarang, setKategoriBarang ] = useState(1)
+    const [ satuan, setSatuan ] = useState('')
+
     const [ listSupplier, setListSupplier ] = useState([])
     const [ listKategori, setListKategori ] = useState([])
+
+    // CONDITION STATE
     const [ loading, setLoading ] = useState(false)
+    const [ defaultSatuan, setDefaultSatuan ] = useState(false)
 
     const [price,setPrice] = useState(null)
 
@@ -61,6 +66,22 @@ export default function ManageBarang() {
         setIdSupplier(e.target.value)
     }
 
+    // HANDLE CHANGE SATUAN BARANG
+    const pilihSatuan = (e) => { 
+        if(e.target.value === 'default') {
+            setSatuan('')
+            setDefaultSatuan(true)
+        } else {
+            setSatuan(e.target.value)
+        }
+    }
+
+    // CANCEL DEFAULT SATUAN
+    const cancelDefaultSatuan = () => {
+        setDefaultSatuan(false)
+        setSatuan('')
+    }
+
     // FUNCTION INPUT BARANG
     const inputBarang = () => {
         if(!namaBarang) {
@@ -69,6 +90,8 @@ export default function ManageBarang() {
             alert('Masukkan harga barang!')
         } else if(!stokBarang) {
             alert('Masukkan stok barang!')
+        } else if(!satuan) {
+            alert('masukkan satuan barang')
         } else if(!deskripsiBarang) {
             alert('Masukkan deskripsi barang!')
         } else if(!gambarBarang) {
@@ -90,7 +113,8 @@ export default function ManageBarang() {
                 stokBarang,
                 deskripsiBarang,
                 idSupplier,
-                kategoriBarang
+                kategoriBarang,
+                satuanBarang: satuan
             }
 
             bodyFormData.append('data', JSON.stringify(data))
@@ -115,6 +139,16 @@ export default function ManageBarang() {
         }
       
     }
+
+    const dummyDataSatuan = [
+        { id: 0, satuan: '' },
+        { id: 1, satuan: 'kg' },
+        { id: 2, satuan: '1/2 kg' },
+        { id: 3, satuan: 'pcs' },
+        { id: 4, satuan: 'ekor' },
+        { id: 5, satuan: 'karton'},
+        { id: 'default', satuan: 'default' }
+    ]
 
     useEffect(() => {
         getListNamaSupplier()
@@ -141,9 +175,38 @@ export default function ManageBarang() {
                 {/* FORM HARGA BARANG */}
 
                 {/* FORM STOK BARANG */}
-                <div className='inputbarang-input' style={{ marginRight: '0'}}>
+                <div className='inputbarang-input-stok' style={{ marginRight: '0'}}>
                     <label>Stok Barang</label> <br/>
-                    <input type="number" onChange={(e) => setStokBarang(e.target.value)} value={stokBarang}/>
+                    
+                    <div style={{ display: 'flex'}}>
+                        <input type="number"  
+                            onChange={(e) => setStokBarang(e.target.value)} 
+                            value={stokBarang}
+                        />
+                        {/* FORM SATUAN BARANG */}
+                        <div style={{ width: '50%' }}>
+                            {
+                                defaultSatuan
+                                ?
+                                <div className="inputbarang-satuan-default">
+                                    <input type="text"  
+                                        onChange={(e) => setSatuan(e.target.value)} 
+                                        style={{ marginLeft: '10px', width: "100%" }}
+                                    />
+                                    <button onClick={cancelDefaultSatuan}>cancel</button>
+                                </div>
+                                :
+                                <select className="skillPicker" onChange={pilihSatuan}>
+                                    {dummyDataSatuan.map((option, index) =>
+                                    <option key={option.id} value={option.satuan}>
+                                        {option.satuan}
+                                    </option>
+                                    )}
+                                </select>
+                            }
+                        </div>
+
+                    </div>
                 </div>
                 {/* FORM STOK BARANG */}
 

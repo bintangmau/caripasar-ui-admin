@@ -228,6 +228,7 @@ export default function ManageBarangFilter() {
                     stok={val.stokBarang}
                     deskripsi={val.deskripsiBarang}
                     supplier={val.namasupplier}
+                    satuan={val.satuanBarang}
                 />
             )
         })

@@ -5,11 +5,12 @@ import { urlAPI } from '../../../../helper/database'
 // CSS
 import './index.css'
 
-export default function ManageBarangDetails({ id, nama, harga, stok, deskripsi, supplier}) {
+export default function ManageBarangDetails({ id, nama, harga, stok, deskripsi, supplier,satuan }) {
     const [ namaBarang, setNamaBarang ] = useState(nama)
     const [ hargaBarang, setHargaBarang ] = useState(harga)
     const [ stokBarang, setStokBarang ] = useState(stok)
     const [ deskripsiBarang, setDeskripsiBarang ] = useState(deskripsi)
+    const [ satuanBarang, setSatuanBarang ] = useState(satuan)
     
     const [ editCondition, setEditCondition ] = useState(false)
     
@@ -32,7 +33,7 @@ export default function ManageBarangDetails({ id, nama, harga, stok, deskripsi, 
             stokBarang,
             deskripsiBarang,
             idBarang: id,
-            idSupplier: 141
+            satuanBarang
         })
         .then(() => {
             setEditCondition(false)
@@ -48,8 +49,9 @@ export default function ManageBarangDetails({ id, nama, harga, stok, deskripsi, 
                 <td>
                     <input className="managebarang-edit-value-input" type="text" value={namaBarang} onChange={(e) => setNamaBarang(e.target.value)}/>
                 </td>
-                <td>
-                    <input className="managebarang-edit-value-input" type="number" value={hargaBarang} onChange={(e) => setHargaBarang(e.target.value)}/>
+                <td className='managebar-details-edit-satuan'>
+                    <input type="number" value={hargaBarang} onChange={(e) => setHargaBarang(e.target.value)}/>
+                    <input type="text" style={{ marginLeft: '5px' }} value={satuanBarang} onChange={(e) => setSatuanBarang(e.target.value)}/>
                 </td>
                 <td>
                     <input className="managebarang-edit-value-input" type="number" value={stokBarang} onChange={(e) => setStokBarang(e.target.value)}/>
@@ -74,7 +76,7 @@ export default function ManageBarangDetails({ id, nama, harga, stok, deskripsi, 
         return (
             <tr>
                 <td>{nama}</td>
-                <td>{harga}</td>
+                <td>{harga + '/' + satuan}</td>
                 <td>{stok}</td>
                 <td>{deskripsi}</td>
                 <td>{supplier}</td>
